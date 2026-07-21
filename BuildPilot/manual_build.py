@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Manual Build - Pull, build, and upload immediately
 Use this when you want to force a build without waiting for the auto-checker

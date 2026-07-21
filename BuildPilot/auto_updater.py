@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Auto Updater - Continuously checks GitHub repo for updates
 If new commits found: pulls, builds, uploads APK to website & GitHub releases
