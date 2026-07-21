@@ -55,7 +55,7 @@ WEBSITE_UPLOAD = {
 GITHUB_RELEASE = {
     "enabled": True,
     "token": os.getenv("GITHUB_TOKEN", ""),  # GitHub PAT with repo scope
-    "repo_owner": "DHRUV7044",
+    "repo_owner": "mukptl",
     "repo_name": "Gigbestcopilot",
     "release_tag_prefix": "v",  # Tags will be like v1.0.0, v1.0.1, etc.
     "release_name_template": "Release {version}",
