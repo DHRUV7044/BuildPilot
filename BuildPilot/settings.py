@@ -6,6 +6,8 @@ Edit these values for your project
 import os
 from pathlib import Path
 from dotenv import load_dotenv  # pip install python-dotenv
+import sys
+sys.dont_write_bytecode = True
 
 # Load environment variables from key.env
 env_path = Path(__file__).parent / "key.env"

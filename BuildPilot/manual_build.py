@@ -13,6 +13,8 @@ from settings import *
 # Import the automation class from auto_updater
 from auto_updater import BuildAutomation, setup_logging
 
+sys.dont_write_bytecode = True
+
 logger = setup_logging()
 
 
