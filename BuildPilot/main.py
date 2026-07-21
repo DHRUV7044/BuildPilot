@@ -2,14 +2,24 @@ import subprocess
 
 command = [
     ['git', '--version'],
-    ['git' , 'pull']
+    ['git', 'pull'],
+    ['dotnet', '--version'],
+    ['dotnet', 'build'],
 ]
 
-result = subprocess.run(
-    command[1],
-    text=True,
-    capture_output=True
-)
+def run_command(command):
+    result = subprocess.run(
+        command,
+        text=True,
+        capture_output=True
+    )
+    return result
 
-print(result.stdout.strip())
-print("Return Code:", result.returncode)
+for cmd in command:
+    result = run_command(cmd)
+    print(f"Command: {' '.join(cmd)}")
+    print(result.stdout.strip())
+    print("Return Code:", result.returncode)
+    print("-" * 40)
+
+
