@@ -17,3 +17,5 @@ The project emphasizes simplicity, reliability, and extensibility. Instead of tr
 * Future notification support
 
 > 🚧 **Status:** Early development. The current focus is building a robust and maintainable core pipeline before adding background services, scheduling, and a graphical interface.
+A lightweight, modular build automation server for Windows that pulls source code, executes configurable builds, and manages build artifacts with a focus on simplicity and reliability.
+
