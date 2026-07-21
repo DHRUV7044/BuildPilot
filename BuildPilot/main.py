@@ -1,11 +1,15 @@
 import subprocess
 
+command = [
+    ['git', '--version'],
+    ['git' , 'pull']
+]
 
 result = subprocess.run(
-    ['git', '--version'],
+    command[1],
     text=True,
     capture_output=True
 )
 
-print("Git Version:", result.stdout.strip())
+print(result.stdout.strip())
 print("Return Code:", result.returncode)
