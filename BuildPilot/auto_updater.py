@@ -99,7 +99,7 @@ class BuildAutomation:
         """Get commit message and author for release notes"""
         result = self.run_command([
             self.git_cmd, "log", "-1",
-            "--pretty=format:%s%n%b%nAuthor: %an <%ae>%nDate: %ad",
+            "--pretty=format:%s%n%b%n <%ae>%nDate: %ad",
             commit_hash
         ])
         if result and result.returncode == 0:
