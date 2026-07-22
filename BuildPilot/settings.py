@@ -24,6 +24,8 @@ BRANCH = "main"  # Branch to track
 ANDROID_CSPROJ = r"D:\Gigbestcopilot_app\Gigbestcopilot\Platforms\Gigbestcopilot.Android\Gigbestcopilot.Android.csproj"
 # Or use SOLUTION_FILE if you prefer building solution
 SOLUTION_FILE = r"D:\Gigbestcopilot_app\Gigbestcopilot\YourSolution.sln"
+# for desktop build
+DESKTOP_CSPROJ = r"D:\Gigbestcopilot_app\Gigbestcopilot\Platforms\Gigbestcopilot.Desktop\Gigbestcopilot.Desktop.csproj"
 
 # Build configuration
 BUILD_CONFIGURATION = "Release"
@@ -53,7 +55,7 @@ WEBSITE_UPLOAD = {
 
 # --- GitHub Release Upload ---
 GITHUB_RELEASE = {
-    "enabled": True,
+    "enabled": False,  # Set to True to enable GitHub release upload
     "token": os.getenv("GITHUB_TOKEN", ""),  # GitHub PAT with repo scope
     "repo_owner": "mukptl",
     "repo_name": "Gigbestcopilot",

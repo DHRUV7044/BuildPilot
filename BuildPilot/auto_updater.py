@@ -121,35 +121,50 @@ class BuildAutomation:
             return False
 
     def build_project(self):
-        """Build the .NET MAUI/Android project"""
+        """Build Android and Desktop projects"""
         logger.info("Starting build...")
 
         # Clean first
         logger.info("Cleaning previous build...")
-        clean_result = self.run_command([
+        self.run_command([
             self.dotnet_cmd, "clean", str(SOLUTION_FILE)
         ])
 
-        # Build
-        build_cmd = [
-            self.dotnet_cmd, "build",
-            str(ANDROID_CSPROJ),
-            "-c", BUILD_CONFIGURATION,
-            "-f", "net10.0-android",
-            "-p:AndroidPackageFormat=apk"
+        builds = [
+            (
+                "Android",
+                [
+                    self.dotnet_cmd, "build",
+                    str(ANDROID_CSPROJ),
+                    "-c", BUILD_CONFIGURATION,
+                    "-f", "net10.0-android",
+                    "-p:AndroidPackageFormat=apk"
+                ]
+            ),
+            (
+                "Desktop",
+                [
+                    self.dotnet_cmd, "build",
+                    str(DESKTOP_CSPROJ),
+                    "-c", BUILD_CONFIGURATION
+                ]
+            )
         ]
 
-        logger.info(f"Building: {' '.join(build_cmd)}")
-        result = self.run_command(build_cmd)
+        for name, build_cmd in builds:
+            logger.info(f"Building {name}: {' '.join(build_cmd)}")
 
-        if result and result.returncode == 0:
-            logger.info("Build successful!")
+            result = self.run_command(build_cmd)
+
+            if not result or result.returncode != 0:
+                logger.error(
+                    f"{name} Build failed: {result.stderr if result else 'Unknown error'}")
+                return False
+
+            logger.info(f"{name} Build successful!")
             logger.debug(result.stdout)
-            return True
-        else:
-            logger.error(
-                f"Build failed: {result.stderr if result else 'Unknown error'}")
-            return False
+
+        return True
 
     def find_apk(self):
         """Find the generated APK file"""
