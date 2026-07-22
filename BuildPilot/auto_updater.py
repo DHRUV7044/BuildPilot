@@ -406,6 +406,32 @@ class BuildAutomation:
         else:
             results.append("Find APK: OK")
 
+        # Copy latest APK to STORE_PATH
+        if success:
+            try:
+                store_dir = Path(STORE_PATH)
+                store_dir.mkdir(parents=True, exist_ok=True)
+
+                destination = store_dir / self.apk_path.name
+
+                # Delete old APK if it exists
+                if destination.exists():
+                    destination.unlink()
+
+                # Copy new APK
+                shutil.copy2(self.apk_path, destination)
+
+                # Use the copied APK for the remaining pipeline
+                self.apk_path = destination
+
+                logger.info(f"APK copied to: {destination}")
+                results.append("Store APK: OK")
+
+            except Exception as e:
+                logger.error(f"Failed to store APK: {e}")
+                success = False
+                results.append("Store APK: FAILED")
+
         # Backup
         if success:
             self.backup_build()
@@ -430,6 +456,45 @@ class BuildAutomation:
 
         # Notification
         self.send_notification(success, "\n".join(results))
+
+        if success:
+            should_run = False
+
+            if ASK_BEFORE_RUN_DESKTOP:
+                while True:
+                    choice = input(
+                        "\nRun desktop application?\n"
+                        "1. Yes\n"
+                        "2. No\n"
+                        "Enter choice: "
+                    ).strip()
+
+                    if choice == "1":
+                        should_run = True
+                        break
+                    elif choice == "2":
+                        break
+                    else:
+                        print("Invalid choice. Enter 1 or 2.")
+            else:
+                should_run = RUN_DESKTOP
+
+            if should_run:
+                logger.info("Starting desktop application...")
+
+        result = self.run_command([
+            self.dotnet_cmd,
+            "run",
+            "--project",
+            str(DESKTOP_CSPROJ)
+        ])
+
+        if result and result.returncode == 0:
+            logger.info("Desktop application exited successfully.")
+        else:
+            logger.error(
+                f"Failed to run desktop application: {result.stderr if result else 'Unknown error'}"
+            )
 
         return success
 

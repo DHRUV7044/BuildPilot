@@ -92,3 +92,11 @@ COMMAND_TIMEOUT = 600
 # Keep last N builds as backup
 KEEP_BACKUP_BUILDS = 5
 BACKUP_DIR = r"D:\Gigbestcopilot_app\backup_builds"
+
+# ==================== STORE PATH ====================
+# Path to the store directory where APKs or other build artifacts will be stored
+STORE_PATH = r"C:\Users\mukpt\Desktop\apk_files"
+
+
+RUN_DESKTOP = False  # Set to True to build desktop version
+ASK_BEFORE_RUN_DESKTOP = True
